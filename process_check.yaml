@@ -6,6 +6,6 @@
   - name: process check
     shell: '{{  commandhere }}'
     register: command_result
-    failed_when: command_result.stdout|int != 2
+    failed_when: command_result.stdout|int != 1
 
   
