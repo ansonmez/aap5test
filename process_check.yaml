@@ -1,4 +1,11 @@
+---
+- name: process check
+  hosts: all
+ 
+  tasks:
   - name: process check
-    shell: { commandhere }
+    shell: '{{  commandhere }}'
     register: command_result
     failed_when: command_result.stdout|int != 2
+
+  
