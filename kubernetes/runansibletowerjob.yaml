@@ -8,7 +8,7 @@
     tasks:
       - name: Launch a job
         job_launch:
-          job_template: '{{ runthis }}' 	
+          job_template: gnbcheck	
           validate_certs: no
           controller_username: admin
           controller_password: redhat
