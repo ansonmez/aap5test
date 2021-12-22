@@ -17,7 +17,7 @@
 
       - name: Wait for job max 120s
         job_wait:
-          job_id: gnbcheck
+          job_id: "{{ job.id }}"
           timeout: 120
           validate_certs: no
           controller_username: admin
