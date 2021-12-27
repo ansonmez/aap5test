@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  creationTimestamp: '2021-12-27T13:32:32Z'
+  generation: 10
+  managedFields:
+    - apiVersion: tekton.dev/v1beta1
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:spec':
+          .: {}
+          'f:params': {}
+          'f:steps': {}
+          'f:workspaces': {}
+      manager: Mozilla
+      operation: Update
+      time: '2021-12-27T13:32:32Z'
+  name: update-gitops-repo
+  namespace: open5gs
+  resourceVersion: '76448596'
+  uid: 4af978ac-cf2c-48a4-a6d8-991c21147abc
+spec:
+  params:
+    - name: config-git-url
+      type: string
+  steps:
+    - image: 'alpine/git:v2.30.2'
+      name: git-checkout-config
+      resources: {}
+      script: >
+        #!/usr/bin/env sh
+
+        set -e
+
+        rm -rf *
+
+        rm -rf .git
+
+
+        eval $(ssh-agent)
+
+        ssh-add ~/.ssh/id_*
+
+        git config --global core.sshCommand 'ssh -o
+        StrictHostKeyChecking=accept-new'
+
+        git clone git@github.com:ansonmez/acmopen5gpoliciescicd.git  
+
+        cd acmopen5gpoliciescicd
+
+        git checkout test
+
+        git pull 
+
+        git checkout preprod
+
+        git merge test
+      workingDir: $(workspaces.config-source.path)
+  workspaces:
+    - name: config-source
